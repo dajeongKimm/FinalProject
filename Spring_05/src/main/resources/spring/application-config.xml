@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    
+    <!-- Uncomment and add your base-package here:
+         <context:component-scan
+            base-package="org.springframework.samples.service"/>  -->
+            
+    
+    <!-- DataSource 생성 -->
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+    	<property name="driverClassName">
+    		<value>com.mysql.cj.jdbc.Driver</value>
+    	</property>
+    	<property name="url" value="jdbc:mysql://localhost:3306/mvc?serverTimezone=UTC" />
+    	<property name="username" value = "root" />
+    	<property name="password" value = "SystemManager402" />
+    </bean>
+    
+    <!-- 
+    	dataSource를 사용하여 데이터베이스 커넥션을 추출하고, 종료할수 있는 팩토리 객체를 생성 
+    	mybatis설정 및 실행할 쿼리 문의 위치 정보 지정
+    -->
+    <bean id = "sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    	<property name="dataSource"  ref="dataSource"/>
+    	<property name="configLocation" value = "classpath:spring/mybatisConfig.xml"/>
+    	<property name="mapperLocations" value = "classpath:spring/mapper/**/*Mapper.xml" />
+    </bean>
+    
+    <!--  -->
+    <bean id = "sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+    	<constructor-arg index="0" ref="sqlSessionFactory" />
+    </bean>
+
+</beans>

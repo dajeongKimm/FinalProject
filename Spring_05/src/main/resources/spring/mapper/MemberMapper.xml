@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<!--  namespace 속서은 현재 xml 파일을 나타내는 id와 같은 정보 -->
+<mapper namespace="com.tje.model.MemberMapper">
+
+	<select id="count" resultType="int">
+		select count(*) from member
+	</select>
+	
+	<select id="allRecord" resultType="member">
+		select * from member
+	</select>
+	
+	<select id="oneRecord" parameterType="member" resultType="member">
+		select * from member where id = #{id}
+	</select>
+	
+	<insert id="insert" parameterType="member" >
+		insert into member values(#{id}, #{pw}, #{name})
+	</insert>
+	
+	<delete id="deleteOne" parameterType="member">
+		delete from member where id = #{id}
+	</delete>
+	
+
+</mapper>
